@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using Entities.Abstract;
+using Core.Entities;
 using Entities.Concrete;
 
-namespace DataAccess.Abstract
+namespace DataAccess
 {
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
