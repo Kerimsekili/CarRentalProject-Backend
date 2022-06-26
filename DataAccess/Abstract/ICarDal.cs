@@ -1,10 +1,9 @@
 ﻿
-
 using System.Collections.Generic;
-using DataAccess;
+using Core.DataAccess;
 using Entities.Concrete;
 
-namespace Core.DataAccess
+namespace DataAccess.Abstract
 {
     public interface ICarDal:IEntityRepository<Car>
     {

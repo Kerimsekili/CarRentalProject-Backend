@@ -42,6 +42,11 @@ namespace DataAccess.Concrete
             _cars.Add(car);
         }
 
+        public void Insert(Car car)
+        {
+            
+        }
+
         public void Update(Car car)
         {
             //Gönderdiğim ürün Idsine sahip olan listedei ürünü bul
