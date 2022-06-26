@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using Core.DataAccess;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete
 {
@@ -72,6 +73,9 @@ namespace DataAccess.Concrete
             return _cars.Where(p => p.Id == id).ToList();
         }
 
-        
+        public List<CarDetailDto> getCarDetails()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,7 +9,12 @@ namespace ConsoleUI
     {
          static void Main(string[] args)
          {
-             //CarTest();
+             CarTest();
+             //CarTest2();
+         }
+
+         private static void CarTest2()
+         {
              CarManager carManager = new CarManager(new EfCarDal());
              foreach (var car in carManager.GetAll())
              {
@@ -20,9 +25,9 @@ namespace ConsoleUI
          private static void CarTest()
          {
              CarManager carManager = new CarManager(new EfCarDal());
-             foreach (var car in carManager.GetAll())
+             foreach (var car in carManager.getCarDetails())
              {
-                 System.Console.WriteLine(car.Description);
+                 System.Console.WriteLine(car.Description+" / "+car.Name+" / "+car.DailyPrice);
              }
          }
     }
