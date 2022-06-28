@@ -18,16 +18,16 @@ namespace ConsoleUI
              CarManager carManager = new CarManager(new EfCarDal());
              foreach (var car in carManager.GetAll())
              {
-                 Console.WriteLine(car.Description);
+                 Console.WriteLine(car.CarName);
              }
          }
 
          private static void CarTest()
          {
              CarManager carManager = new CarManager(new EfCarDal());
-             foreach (var car in carManager.getCarDetails())
+             foreach (var car in carManager.GetCarDetails())
              {
-                 System.Console.WriteLine(car.Description+" / "+car.Name+" / "+car.DailyPrice);
+                 System.Console.WriteLine(car.CarName + " / "+car.BrandName+" / "+car.ColorName+" / "+car.DailyPrice);
              }
          }
     }

@@ -20,10 +20,10 @@ namespace DataAccess.Concrete
          {
              _cars = new List<Car>
              {
-                 new Car{Id=1,BrandId=1,ColorId=1,ModelYear=2015,DailyPrice=600,Description="Audi A6"},
-                 new Car{Id=2,BrandId=2,ColorId=2,ModelYear = 2022,DailyPrice = 1000,Description = "Ford Mustang"},
-                 new Car{Id=3,BrandId=3,ColorId=3,ModelYear = 1999,DailyPrice = 750,Description = "Dodge Charger,V12 Engine(Old Boy)"},
-                 new Car{Id = 4,BrandId =3,ColorId =3,ModelYear = 2005,DailyPrice = 800,Description = "Dodge Challanger,Big Machine"}
+                 new Car{Id=1,BrandId=1,ColorId=1,ModelYear=2015,DailyPrice=600,CarName="Audi A6"},
+                 new Car{Id=2,BrandId=2,ColorId=2,ModelYear = 2022,DailyPrice = 1000,CarName = "Ford Mustang"},
+                 new Car{Id=3,BrandId=3,ColorId=3,ModelYear = 1999,DailyPrice = 750,CarName = "Dodge Charger,V12 Engine(Old Boy)"},
+                 new Car{Id = 4,BrandId =3,ColorId =3,ModelYear = 2005,DailyPrice = 800,CarName = "Dodge Challanger,Big Machine"}
 
              };
          }
@@ -56,7 +56,7 @@ namespace DataAccess.Concrete
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
+            carToUpdate.CarName = car.CarName;
 
         }
 
@@ -73,7 +73,7 @@ namespace DataAccess.Concrete
             return _cars.Where(p => p.Id == id).ToList();
         }
 
-        public List<CarDetailDto> getCarDetails()
+        public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }
