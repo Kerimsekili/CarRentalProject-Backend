@@ -2,36 +2,46 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constans;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    internal class ColorManager:IColorService
+    public class ColorManager:IColorService
     {
-        public IColorService _colorDal;
-        public List<Color> GetAll()
+        public IColorDal _colorDal;
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            //if (DateTime.Now.Hour == 22)
+            //{
+            //    return new ErrorDataResult<List<Color>>(Messeges.MaintenanceTime);
+            //}
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messeges.GeneralListed);
         }
 
-        public List<Color> GetById(int id)
+        public IDataResult<List<Color>> GetById(int id)
         {
-           return _colorDal.GetById(id);
+           return new SuccessDataResult<List<Color>>(_colorDal.GetById(id));
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             _colorDal.Add(color);
+            return new SuccessResult(Messeges.GeneralAdded);
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             _colorDal.Update(color);
+            return new SuccessResult(Messeges.GeneralUpdate);
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
+            return new SuccessResult(Messeges.GeneralDelete);
         }
     }
 }
