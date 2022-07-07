@@ -13,9 +13,9 @@ namespace ConsoleUI
             //CarTest2();
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
 
-            foreach (var user in customerManager.)
+            foreach (var customer in customerManager.GetAll().Data)
             {
-                Console.WriteLine(user.FirstName);
+                Console.WriteLine(customer.CompanyName);
             }
         }
 
