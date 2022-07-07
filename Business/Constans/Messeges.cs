@@ -12,5 +12,7 @@ namespace Business.Constans
         public static string GeneralUpdate = "The update was successful.";
         public static string GeneralDelete = "The deletion was successful.";
         public static string MaintenanceTime = "The system is maintence.";
+        public static string UpdateFailed = "The operation failed.";
+        public static string RentalFailed = "The rental operation is failed.";
     }
 }
