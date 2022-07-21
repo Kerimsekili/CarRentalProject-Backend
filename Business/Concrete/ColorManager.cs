@@ -12,6 +12,11 @@ namespace Business.Concrete
     public class ColorManager:IColorService
     {
         public IColorDal _colorDal;
+
+        public ColorManager(IColorDal colorDal)
+        {
+            _colorDal = colorDal;
+        }
         public IDataResult<List<Color>> GetAll()
         {
             //if (DateTime.Now.Hour == 22)

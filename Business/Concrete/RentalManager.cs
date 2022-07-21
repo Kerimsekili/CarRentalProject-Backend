@@ -29,6 +29,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.Id == id));
         }
 
+        //method REFACTOR EDİLECEK
         public IResult Add(Rental rental)
         {
 
@@ -58,6 +59,7 @@ namespace Business.Concrete
             return new SuccessResult(Messeges.GeneralUpdate);
         }
 
+        //method REFACTOR EDİLECEK
         public IResult UpdateReturnDate(Rental rental)
         {
             var result = _rentalDal.GetAll(p => p.Id == rental.Id);

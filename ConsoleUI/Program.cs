@@ -15,7 +15,7 @@ namespace ConsoleUI
 
             foreach (var customer in customerManager.GetAll().Data)
             {
-                Console.WriteLine(customer.CompanyName);
+                Console.WriteLine(customer.Id+" / "+customer.CompanyName);
             }
         }
 
