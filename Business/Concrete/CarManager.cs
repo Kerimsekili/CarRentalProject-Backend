@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Business.Abstract;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac;
 using Core.DataAccess;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -30,13 +32,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messeges.GeneralListed);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.CarName.Length < 2)
-            {
-                //Magic String
-                return new ErrorResult(Messeges.CarNameInvalid);
-            }
             _carDal.Add(car);
             return new SuccessResult(Messeges.GeneralAdded);
         }

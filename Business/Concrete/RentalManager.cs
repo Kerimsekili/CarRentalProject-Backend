@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,19 +32,10 @@ namespace Business.Concrete
         }
 
         //method REFACTOR EDİLECEK
+
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-
-            foreach (Rental item in _rentalDal.GetAll())
-            {
-                if (item.CarId == rental.CarId)
-                {
-                    if (item.ReturnDate > rental.RentDate)
-                    {
-                        return new ErrorResult(Messeges.RentalFailed);
-                    }
-                }
-            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messeges.GeneralAdded);
         }

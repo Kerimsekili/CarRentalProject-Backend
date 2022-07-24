@@ -12,6 +12,12 @@ namespace Business.Concrete
     public class UserManager:IUserService
     {
         public IUserDal _userDal;
+
+        public UserManager(IUserDal userDal)
+        {
+            _userDal = userDal;
+        }
+
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
