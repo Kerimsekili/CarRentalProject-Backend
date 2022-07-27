@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using System.Collections.Generic;
 
 namespace Business.Concrete
-{
+{ // ctrl + r + g
     public class ColorManager:IColorService
     {
         public IColorDal _colorDal;
