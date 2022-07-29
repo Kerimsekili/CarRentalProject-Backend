@@ -38,6 +38,11 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Add(Car car)
         {
             _cars.Add(car);
