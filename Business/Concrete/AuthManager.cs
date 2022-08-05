@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using Business.Abstract;
-using Business.Constans.Messeges;
+using Business.Constants.Messages;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -11,10 +11,10 @@ using Entities.DTOs;
 
 namespace Business.Concrete
 {
-    public class AuthManager:IAuthService
+    public class AuthManager : IAuthService
     {
         private IUserService _userService;
-        ITokenHelper _tokenHelper;
+        private ITokenHelper _tokenHelper;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
@@ -25,8 +25,8 @@ namespace Business.Concrete
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(password,out passwordHash,out passwordSalt);
-            var user = new User()
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var user = new User
             {
                 Email = userForRegisterDto.Email,
                 FirstName = userForRegisterDto.FirstName,
@@ -36,31 +36,32 @@ namespace Business.Concrete
                 Status = true
             };
             _userService.Add(user);
-            return new SuccessDataResult<User>(user, Messeges.UserRegistered);
+            return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
         //CHECK THERE
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
-            if (userToCheck==null)
+            if (userToCheck == null)
             {
-                return new ErrorDataResult<User>(Messeges.UserNotFound);
+                return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password,userToCheck.PasswordHash,userToCheck.PasswordSalt))
+            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash,
+                    userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>(Messeges.PasswordError);
+                //return new ErrorDataResult<User>(Messages.PasswordError);
             }
 
-            return new SuccessDataResult<User>(userToCheck, Messeges.SuccessfulLogin);
+            return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
         }
 
         public IResult UserExist(string email)
         {
-            if (_userService.GetByMail(email)!=null)
+            if (_userService.GetByMail(email) != null)
             {
-                return new ErrorResult(Messeges.UserAlreadyExist);
+                return new ErrorResult(Messages.UserAlreadyExist);
             }
 
             return new SuccessResult();
@@ -68,7 +69,9 @@ namespace Business.Concrete
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            throw new NotImplementedException();
+            var claims = _userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
     }
 }

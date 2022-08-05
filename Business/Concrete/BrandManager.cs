@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
-using Business.Constans.Messeges;
+using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
 using Core.Utilities.Results;
@@ -20,7 +20,7 @@ namespace Business.Concrete
         }
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messeges.GeneralListed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.GeneralListed);
         }
 
         public IDataResult<List<Brand>> GetById(int id)
@@ -32,19 +32,19 @@ namespace Business.Concrete
         public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
-            return new SuccessResult(Messeges.GeneralAdded);
+            return new SuccessResult(Messages.GeneralAdded);
         }
 
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
-            return new SuccessResult(Messeges.GeneralUpdate);
+            return new SuccessResult(Messages.GeneralUpdate);
         }
 
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            return new SuccessResult(Messeges.GeneralDelete);
+            return new SuccessResult(Messages.GeneralDelete);
         }
     }
 }

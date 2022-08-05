@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Business.Constans.Messeges;
+using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
 using Core.Utilities.Results;
@@ -19,7 +19,7 @@ namespace Business.Concrete
         }
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messeges.GeneralListed);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.GeneralListed);
         }
 
         public IDataResult<List<Color>> GetById(int id)
@@ -31,19 +31,19 @@ namespace Business.Concrete
         public IResult Add(Color color)
         {
             _colorDal.Add(color);
-            return new SuccessResult(Messeges.GeneralAdded);
+            return new SuccessResult(Messages.GeneralAdded);
         }
 
         public IResult Update(Color color)
         {
             _colorDal.Update(color);
-            return new SuccessResult(Messeges.GeneralUpdate);
+            return new SuccessResult(Messages.GeneralUpdate);
         }
 
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
-            return new SuccessResult(Messeges.GeneralDelete);
+            return new SuccessResult(Messages.GeneralDelete);
         }
     }
 }

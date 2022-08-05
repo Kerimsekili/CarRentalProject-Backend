@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
-using Business.Constans.Messeges;
+using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
 using Core.Utilities.Results;
@@ -37,19 +37,19 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             _rentalDal.Add(rental);
-            return new SuccessResult(Messeges.GeneralAdded);
+            return new SuccessResult(Messages.GeneralAdded);
         }
 
         public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
-            return new SuccessResult(Messeges.GeneralDelete);
+            return new SuccessResult(Messages.GeneralDelete);
         }
 
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
-            return new SuccessResult(Messeges.GeneralUpdate);
+            return new SuccessResult(Messages.GeneralUpdate);
         }
 
         //method REFACTOR EDİLECEK
@@ -60,12 +60,12 @@ namespace Business.Concrete
 
             if (updateRental != null)
             {
-                return new ErrorResult(Messeges.UpdateFailed);
+                return new ErrorResult(Messages.UpdateFailed);
             }
 
             updateRental.ReturnDate = rental.ReturnDate;
             _rentalDal.Update(updateRental);
-            return new SuccessResult(Messeges.GeneralUpdate);
+            return new SuccessResult(Messages.GeneralUpdate);
         }
     }
 }

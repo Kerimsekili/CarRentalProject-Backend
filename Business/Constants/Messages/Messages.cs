@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Entities.Concrete;
 
-namespace Business.Constans.Messeges
+namespace Business.Constants.Messages
 {
-    public class Messeges
+    public class Messages
     {
         public static string PasswordError = "Password Error !";
         public static string GeneralAdded = "Adding was successful.";
@@ -25,5 +25,6 @@ namespace Business.Constans.Messeges
         public static string SuccessfulLogin="Login Successful";
         public static string UserAlreadyExist = "User Already Exist";
         public static string UserRegistered = "User Successfully Registered";
+        public static string AccessTokenCreated = "Access token created";
     }
 }

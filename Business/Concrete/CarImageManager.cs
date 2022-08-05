@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
-using Business.Constans;
-using Business.Constans.Messeges;
+using Business.Constants;
+using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
 using Core.Business;
@@ -44,7 +44,7 @@ namespace Business.Concrete
             carImage.ImagePath = _uploadService.AddFromBase64(carImageForAddDto.Image);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
-            return new SuccessResult(Messeges.CarImageAdded);
+            return new SuccessResult(Messages.CarImageAdded);
         }
         //resim sil
         [ValidationAspect(typeof(CarImagesValidator))]
@@ -54,7 +54,7 @@ namespace Business.Concrete
             if (carImage == null) return new ErrorResult();
             _uploadService.Remove(carImage.ImagePath);
             _carImageDal.Delete(carImage);
-            return new SuccessResult(Messeges.CarImageDeleted);
+            return new SuccessResult(Messages.CarImageDeleted);
         }
         //resim güncelle
         [ValidationAspect(typeof(CarImagesValidator))]
@@ -65,7 +65,7 @@ namespace Business.Concrete
             carImage.ImagePath = newPath;
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
-            return new SuccessResult(Messeges.CarImageUpdated);
+            return new SuccessResult(Messages.CarImageUpdated);
         }
 
         //resimlerin car-id lerini getir

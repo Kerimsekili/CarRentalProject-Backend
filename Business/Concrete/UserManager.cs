@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
-using Business.Constans.Messeges;
+using Business.Constants.Messages;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -37,19 +37,19 @@ namespace Business.Concrete
         public IResult Add(User user)
         {
             _userDal.Add(user);
-            return new SuccessResult(Messeges.GeneralAdded);
+            return new SuccessResult(Messages.GeneralAdded);
         }
 
         public IResult Update(User user)
         {
            _userDal.Update(user);
-           return new SuccessResult(Messeges.GeneralUpdate);
+           return new SuccessResult(Messages.GeneralUpdate);
         }
 
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
-            return new SuccessResult(Messeges.GeneralDelete);
+            return new SuccessResult(Messages.GeneralDelete);
         }
     }
 }
