@@ -3,59 +3,73 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constans;
+using Business.Constans.Messeges;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac;
 using Core.Business;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 
 
 namespace Business.Concrete
 {
-    public class CarImageManager:ICarImageService
+    public class CarImageManager : ICarImageService
     {
-
         ICarImageDal _carImageDal;
-        IFileHelper _fileHelper;
-        public CarImageManager(ICarImageDal carImageDal,IFileHelper fileHelper)
+        IUploadService _uploadService;
+
+        public CarImageManager(ICarImageDal carImageDal, IUploadService uploadService)
         {
             _carImageDal = carImageDal;
-            _fileHelper = fileHelper;
+            _uploadService = uploadService;
         }
-        public IDataResult<List<CarImage>> GetAll()
+        //resim ekle
+        [ValidationAspect(typeof(CarImagesValidator))]
+        public IResult Add(CarImageForAddDto carImageForAddDto)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
-        }
-
-        public IResult Add(IFormFile file,CarImage carImage)
-        {
-            IResult result = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
+            IResult result = BusinessRules.Run(
+                CheckIfCarImageLimit(carImageForAddDto.CarId)
+            );
             if (result != null)
             {
                 return result;
             }
-            carImage.ImagePath = _fileHelper.Upload(file, PathConstants.ImagesPath);
+
+            CarImage carImage = new CarImage();
+            carImage.CarId = carImageForAddDto.CarId;
+            carImage.ImagePath = _uploadService.AddFromBase64(carImageForAddDto.Image);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
-            return new SuccessResult("Image upload Successfully");
+            return new SuccessResult(Messeges.CarImageAdded);
         }
-
-        public IResult Update(IFormFile file, CarImage carImage)
+        //resim sil
+        [ValidationAspect(typeof(CarImagesValidator))]
+        public IResult Delete(int id)
         {
-            carImage.ImagePath = _fileHelper.Update(file, PathConstants.ImagesPath + carImage.ImagePath, PathConstants.ImagesPath);
-            _carImageDal.Update(carImage);
-            return new SuccessResult();
-        }
-
-        public IResult Delete(CarImage carImage)
-        {
-            _fileHelper.Delete(PathConstants.ImagesPath + carImage.ImagePath);
+            var carImage = _carImageDal.Get(c => c.Id == id);
+            if (carImage == null) return new ErrorResult();
+            _uploadService.Remove(carImage.ImagePath);
             _carImageDal.Delete(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messeges.CarImageDeleted);
+        }
+        //resim güncelle
+        [ValidationAspect(typeof(CarImagesValidator))]
+        public IResult Update(CarImageForUpdateDto carImageForUpdateDto)
+        {
+            var carImage = _carImageDal.Get(c => c.Id == carImageForUpdateDto.CarId);
+            string newPath = _uploadService.UpdateFromBase64(carImage.ImagePath, carImageForUpdateDto.Image);
+            carImage.ImagePath = newPath;
+            carImage.Date = DateTime.Now;
+            _carImageDal.Update(carImage);
+            return new SuccessResult(Messeges.CarImageUpdated);
         }
 
-        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        //resimlerin car-id lerini getir
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
         {
             var result = BusinessRules.Run(CheckCarImage(carId));
             if (result != null)
@@ -64,28 +78,17 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
         }
-
+        //resimlerin idlerini getir
         public IDataResult<CarImage> GetByImageId(int imageId)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == imageId));
         }
-
-        private IDataResult<List<CarImage>> GetDefaultImage(int carId)
+        //resimlerin hepsini listele
+        public IDataResult<List<CarImage>> GetAll()
         {
-
-            List<CarImage> carImage = new List<CarImage>();
-            carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
-            return new SuccessDataResult<List<CarImage>>(carImage);
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
-        private IResult CheckCarImage(int carId)
-        {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result > 0)
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult();
-        }
+        //CarImage Limitini Kontrol Edin
         private IResult CheckIfCarImageLimit(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
@@ -94,6 +97,24 @@ namespace Business.Concrete
                 return new ErrorResult();
             }
             return new SuccessResult();
+        }
+        //Varsayılan Resmi Al
+        private IDataResult<List<CarImage>> GetDefaultImage(int carId)
+        {
+
+            List<CarImage> carImage = new List<CarImage>();
+            carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
+            return new SuccessDataResult<List<CarImage>>(carImage);
+        }
+        //CarImage'ı Kontrol Et
+        private IResult CheckCarImage(int carId)
+        {
+            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
     }

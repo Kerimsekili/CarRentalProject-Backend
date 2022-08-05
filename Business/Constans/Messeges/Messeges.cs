@@ -14,5 +14,10 @@ namespace Business.Constans.Messeges
         public static string MaintenanceTime = "The system is maintence.";
         public static string UpdateFailed = "The operation failed.";
         public static string RentalFailed = "The rental operation is failed.";
+        public static string CarCountOfCategoryError = "Araba Sayısı Kategorisi aşıldı";
+
+        public static string CarImageAdded = "Category Exceeded";
+        public static string CarImageDeleted = "Car Picture Deleted";
+        public static string CarImageUpdated = "Car Picture Updated";
     }
 }

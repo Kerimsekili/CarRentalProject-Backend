@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IDataResult<List<CarImage>> GetAll();
-        IDataResult<List<CarImage>> GetByCarId(int carId);
+        IResult Add(CarImageForAddDto carImageForAddDto);
+        IResult Update(CarImageForUpdateDto carImageForUpdateDto);
+        IResult Delete(int id);
+
         IDataResult<CarImage> GetByImageId(int imageId);
-        IResult Add(IFormFile form,CarImage carImage);
-        IResult Update(IFormFile file, CarImage carImage);
-        IResult Delete(CarImage carImage);
+
+        IDataResult<List<CarImage>> GetAll();
+        IDataResult<List<CarImage>> GetAllByCarId(int carId);
     }
 }

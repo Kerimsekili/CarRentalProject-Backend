@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
+using Microsoft.AspNetCore.Routing;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //aa
     public class CarImagesController : ControllerBase
     {
         ICarImageService _carImageService;
@@ -18,40 +21,46 @@ namespace WebAPI.Controllers
         {
             _carImageService = carImageService;
         }
+        //resim ekle
         [HttpPost("add")]
-        public IActionResult Add([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm] CarImageForAddDto carImageForAddDto,IFormFile image)
         {
-            var result = _carImageService.Add(file, carImage);
+            var result = _carImageService.Add(carImageForAddDto);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        //resim sil
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        public IActionResult Delete(int id)
         {
-            var carDeleteImage = _carImageService.GetByImageId(carImage.Id).Data;
-            var result = _carImageService.Delete(carDeleteImage);
+
+            var result = _carImageService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        //resim güncelle
         [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Update(CarImageForUpdateDto carImageForUpdateDto)
         {
-            var result = _carImageService.Update(file, carImage);
+
+            var result = _carImageService.Update(carImageForUpdateDto);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        //resimleri listele
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
+
             var result = _carImageService.GetAll();
             if (result.Success)
             {
@@ -59,18 +68,20 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getbycarıd")]
-        public IActionResult GetByCarId(int carId)
+        //resimlerin car-id lerini getir
+        [HttpGet("getallbycarid")]
+        public IActionResult GetAllByCarId(int carId)
         {
-            var result = _carImageService.GetByCarId(carId);
+            var result = _carImageService.GetAllByCarId(carId);
             if (result.Success)
             {
                 return Ok(result);
             }
-            return Ok(result);
+            return BadRequest(result);
         }
+        //resimlerin idlerini getir
         [HttpGet("getbyimageid")]
-        public IActionResult GetByImageId(int imageId)
+        public IActionResult GetByImageId([FromForm(Name = ("CarId"))] int imageId)
         {
             var result = _carImageService.GetByImageId(imageId);
             if (result.Success)
