@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Entities.Concrete;
 
 namespace Business.Constans.Messeges
 {
     public class Messeges
     {
+        public static string PasswordError = "Password Error !";
         public static string GeneralAdded = "Adding was successful.";
         public static string GeneralListed = "Listing successful.";
         public static string CarNameInvalid = "Car name is invalid.";
@@ -19,5 +21,9 @@ namespace Business.Constans.Messeges
         public static string CarImageAdded = "Category Exceeded";
         public static string CarImageDeleted = "Car Picture Deleted";
         public static string CarImageUpdated = "Car Picture Updated";
+        public static string UserNotFound = "User not found";
+        public static string SuccessfulLogin="Login Successful";
+        public static string UserAlreadyExist = "User Already Exist";
+        public static string UserRegistered = "User Successfully Registered";
     }
 }
