@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
+using Core.Aspect.Autofac.Caching;
+using Core.Aspect.Autofac.Performance;
+using Core.Aspect.Autofac.Validation;
 using Core.DataAccess;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,6 +27,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour == 02)
@@ -31,7 +37,7 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.GeneralListed);
         }
-
+        [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {

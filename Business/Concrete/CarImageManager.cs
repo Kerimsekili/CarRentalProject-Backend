@@ -6,6 +6,7 @@ using Business.Constants;
 using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
+using Core.Aspect.Autofac.Validation;
 using Core.Business;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;

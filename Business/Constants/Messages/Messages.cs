@@ -26,5 +26,6 @@ namespace Business.Constants.Messages
         public static string UserAlreadyExist = "User Already Exist";
         public static string UserRegistered = "User Successfully Registered";
         public static string AccessTokenCreated = "Access token created";
+        public static string AuthorizationDenied = "Authorization denied.";
     }
 }

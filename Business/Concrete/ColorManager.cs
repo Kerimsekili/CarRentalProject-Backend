@@ -6,6 +6,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System.Collections.Generic;
+using Core.Aspect.Autofac.Validation;
 
 namespace Business.Concrete
 { // ctrl + r + g

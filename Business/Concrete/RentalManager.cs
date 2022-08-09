@@ -6,6 +6,7 @@ using Business.Abstract;
 using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac;
+using Core.Aspect.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
